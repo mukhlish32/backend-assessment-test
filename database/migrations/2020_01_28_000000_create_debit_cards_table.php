@@ -13,23 +13,25 @@ class CreateDebitCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('debit_cards', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('number');
-            $table->string('type');
-            $table->dateTime('expiration_date');
-            $table->dateTime('disabled_at')->nullable()->index();
+        if (!Schema::hasTable("debit_cards")) {
+            Schema::create('debit_cards', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id');
+                $table->unsignedInteger('number');
+                $table->string('type');
+                $table->dateTime('expiration_date');
+                $table->dateTime('disabled_at')->nullable()->index();
 
-            $table->timestamps();
-            $table->softDeletes();
+                $table->timestamps();
+                $table->softDeletes();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-        });
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('restrict');
+            });
+        }
     }
 
     /**
