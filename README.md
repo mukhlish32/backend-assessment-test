@@ -1,45 +1,71 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Backend Assessment Test
+### Setup procedure
+1. Checkout a new feature branch from `master`
+2. Do commit for every function updates
+3. Push the code and prepare the Pull Request from feature branch to master branch
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+### Test #01
+#### Objective
+Create feature tests to test *DebitCard* and *DebitCardTransaction* endpoints and relatives policies, validations and resources.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+#### Business Logic
+Each customer can have multiple *Debit Cards* and each debit card can have many *Debit Card Transactions*.
+
+- The customer should be able to create, update, read and delete his debit cards. 
+- For each debit card the customer should be able to read and create debit card transactions.
+
+##### Debit cards endpoints:
+- **get** `/debit-cards`
+- **post** `/debit-cards`
+- **get** `/debit-cards/{debitCard}`
+- **put** `/debit-cards/{debitCard}`
+- **delete** `/debit-cards/{debitCard}`
+
+##### Debit card transactions endpoints *(optional/bonus point)*:
+- **get** `/debit-card-transactions`
+- **post** `/debit-card-transactions`
+- **get** `/debit-card-transactions/{debitCardTransaction}`
+
+For each endpoint there are specific condition and validation to asserts
+
+#### Challenge
+Read through the *DebitCard* and *DebitCardTransaction* routes, controllers, requests, resources and policies. 
+Understand the logic and write as much tests as possible to validate the endpoints. The `DebitCardControllerTest` and `DebitCardTransactionTest` are already created you just need to complete them.
+
+Tips:
+
+- verify positive and negative scenarios
+- assert response and database values
+- customer can handle only his own debit cards
+
+**IMPORTANT:** For this challenge you SHOULD ONLY update the feature tests
 
 ---
 
-## Edit a file
+### Test #02
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+#### Objective
+Create a Loan service to handle repayments based on complete unit tests already created.
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+#### Business Logic
+Each customer can have a credit *loan* (due in 3 or 6 months). So a Loan has 3 or 6 *scheduled repayments* (once each month),
+and it can be repaid with *received repayments*.
+Example:
 
----
+Loan of 3 months, amount 3000$, created on 2021-01-01
 
-## Create a file
+- Scheduled Repayment of 1000$ due to 2021-02-01
+- Scheduled Repayment of 1000$ due to 2021-03-01
+- Scheduled Repayment of 1000$ due to 2021-04-01
 
-Next, you’ll add a new file to this repository.
+A customer can repay the full amount of each single scheduled repayment, but also he can repay partially or in full
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+#### Challenge
+Read through the tests of LoanService to understand what is the logic to be implemented. All classes and files are already created, you just need to complete them.
+In order to make the unit tests passed, you need to fulfil:
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+- the migrations/factories for scheduled_repayments and received_repayment tables (migration for loans table already done);
+- the Loan, ScheduledRepayment, and ReceivedRepayment Models;
+- the LoanService class;
 
----
-
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+**IMPORTANT:** For this challenge you SHOULD NOT update the unit test
